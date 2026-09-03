@@ -1,0 +1,29 @@
+{
+  "name": "bonne_salle_bon_moment_api_bdd",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/mamadoulamarana1732-hue/Bonne_Salle_Bon_Moment_API_BDD#readme",
+  "bugs": {
+    "url": "https://github.com/mamadoulamarana1732-hue/Bonne_Salle_Bon_Moment_API_BDD/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mamadoulamarana1732-hue/Bonne_Salle_Bon_Moment_API_BDD.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+  "start": "node app.ts"
+ },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.9.4"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.4.1",
+    "typescript": "^7.0.2"
+  }
+}
