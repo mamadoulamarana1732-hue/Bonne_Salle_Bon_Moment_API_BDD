@@ -1,10 +1,10 @@
 import userRepository from "../repositories/user.repository.ts"
 const getById = async (id: string) => {
- const recipe = await userRepository.findById(id);
- if (!recipe) {
- throw new Error("Recipe not found");
+ const user = await userRepository.findById(id);
+ if (!user) {
+ throw new Error("User not found");
  }
- return recipe;
+ return user;
 };
 export default {
   getById,
