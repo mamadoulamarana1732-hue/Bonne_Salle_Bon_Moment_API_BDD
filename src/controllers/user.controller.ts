@@ -14,6 +14,26 @@ const userController = {
       });
     }
   },
+
+  getById: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const user = await UserModel.findById(id);
+
+      if (!user) {
+        return res.status(404).json({
+          message: "Utilisateur non trouvé",
+        });
+      }
+
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json({
+        message: "Erreur lors de la récupération de l'utilisateur",
+        error,
+      });
+    }
+  },
 };
 
 export default userController;
