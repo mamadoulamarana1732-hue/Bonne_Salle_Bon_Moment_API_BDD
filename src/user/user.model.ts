@@ -13,12 +13,6 @@ export interface IUser extends Document {
 
 const userSchema = new Schema<IUser>(
   {
-    id: {
-      type: String,
-      required: true,
-      minlength: 2,
-      trim: true,
-    },
     nom: {
       type: String,
       required: true,
@@ -45,6 +39,7 @@ const userSchema = new Schema<IUser>(
     },
     role: {
       type: String,
+      enum: USER_ROLES,
       default: "User",
     },
   },
