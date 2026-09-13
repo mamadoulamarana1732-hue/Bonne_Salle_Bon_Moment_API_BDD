@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { UserModel } from "../models/user.model.ts";
+import userSchema from "../validators/user.validators.ts";
 
 const userController = {
   getAll: async (req: Request, res: Response) => {
@@ -19,8 +20,6 @@ const userController = {
     try {
       const { id } = req.params;
       const user = await UserModel.findById(id);
-      console.log(user);
-
       if (!user) {
         return res.status(404).json({
           message: "Utilisateur non trouvé",
@@ -36,63 +35,29 @@ const userController = {
     }
   },
 
-  create: async (req: Request, res: Response) => {
-    try {
-      // 1. Récupération des données envoyées dans le corps de la requête (POST)
-      const { role, nom, prenom, email, password, id } = req.body;
+ 
 
-      // 2. Validation basique des champs obligatoires
-      if (!nom || !prenom || !email || !password) {
-        return res.status(400).json({
-          message:
-            "Veuillez remplir tous les champs obligatoires (nom, prenom, email, password).",
-        });
-      }
+create: async (req: Request, res: Response) => {
+  try {
+    const { error, value } = userSchema.validate(req.body);
 
-      // 3. Création et sauvegarde de l'utilisateur dans MongoDB
-      const newUser = await UserModel.create({
-        role: role || "User", // Valeur par défaut si aucun rôle n'est fourni
-        nom,
-        prenom,
-        email,
-        password,
-        ...(id && { id }), // Ajoute le champ id s'il est transmis
-      });
-
-      // 4. Renvoi du statut 201 (Created) avec l'utilisateur créé
-      res.status(201).json({
-        message: "Utilisateur créé avec succès",
-        user: newUser,
-      });
-    } catch (error) {
-      res.status(500).json({
-        message: "Erreur lors de la création de l'utilisateur",
-        error,
+    if (error) {
+      return res.status(400).json({
+        message: error.details[0].message,
       });
     }
-  },
 
-  // Insertion des datas
-  seedData: async (req: Request, res: Response) => {
-    try {
-      const rawUsers = [
-        { role: "Admin", nom: "BAH", prenom: "Mamadou", email: "mamadou.pro@gmail.com", password: "TestMdpTest", id: "jhkhkhkhk" },
-        { role: "Admin", nom: "DIALLO", prenom: "Rougui", email: "rouguiatou.pro@gmail.com", password: "TestMdpTest", id: "015555ggg" },
-      ];
+    const { nom, prenom, email, password, role } = value;
 
-      const insertedUsers = await UserModel.insertMany(rawUsers);
+    // ... reste du code (vérification email existant, hash, création)
 
-      res.status(201).json({
-        message: `${insertedUsers.length} utilisateurs ajoutés avec succès !`,
-        users: insertedUsers,
-      });
-    } catch (error) {
-      res.status(500).json({
-        message: "Erreur d'ajout",
-        error,
-      });
-    }
-  },
+  } catch (error) {
+    res.status(500).json({
+      message: "Erreur lors de la création de l'utilisateur",
+      error,
+    });
+  }
+},
 };
 
 export default userController;
