@@ -27,7 +27,7 @@ const userSchema = new Schema<IUser>(
     email: {
       type: String,
       required: true,
-      unique: true, // contrainte au niveau base pour éviter les doublons
+      unique: true, 
       lowercase: true,
       trim: true,
     },
@@ -42,11 +42,8 @@ const userSchema = new Schema<IUser>(
     },
   },
   {
-    timestamps: true, // gère createdAt / updatedAt automatiquement
-    collection: "users", // nom explicite de la collection demandé
+    timestamps: true, 
+    collection: "users",
   }
 );
-
-// Nom du modèle "User" -> collection "users" (grâce à `collection: "users"` ci-dessus,
-// on n'a pas besoin de compter sur la pluralisation automatique de Mongoose)
 export const UserModel = model<IUser>("User", userSchema);

@@ -39,6 +39,7 @@ const userController = {
 
 create: async (req: Request, res: Response) => {
   try {
+    // Validation avec Joi
     const { error, value } = userSchema.validate(req.body);
 
     if (error) {
@@ -49,7 +50,29 @@ create: async (req: Request, res: Response) => {
 
     const { nom, prenom, email, password, role } = value;
 
-    // ... reste du code (vérification email existant, hash, création)
+    // Vérification email existant
+    const existingUser = await UserModel.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({
+        message: "Un utilisateur avec cet email existe déjà.",
+      });
+    }
+
+    const newUser = await UserModel.create({
+      role: role || "User",
+      nom,
+      prenom,
+      email,
+      password,
+    });
+
+    const userResponse = newUser.toObject();
+  
+
+    res.status(201).json({
+      message: "Utilisateur créé avec succès",
+      user: userResponse,
+    });
 
   } catch (error) {
     res.status(500).json({
@@ -58,6 +81,30 @@ create: async (req: Request, res: Response) => {
     });
   }
 },
+
+deleteUser: async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const deletedUser = await UserModel.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(404).json({
+        message: "Utilisateur non trouvé",
+      });
+    }
+
+    res.status(200).json({
+      message: "Utilisateur supprimé avec succès",
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Erreur lors de la suppression de l'utilisateur",
+      error,
+    });
+  }
+}
 };
 
 export default userController;
