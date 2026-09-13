@@ -1,12 +1,11 @@
 import { Schema, model, Document } from "mongoose";
-import type { UserRole, USER_ROLES } from "../validators/user.validators.ts";
 
 export interface IUser extends Document {
   nom: string;
   prenom: string;
   email: string;
   password: string;
-  role: UserRole;
+  role: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -39,7 +38,6 @@ const userSchema = new Schema<IUser>(
     },
     role: {
       type: String,
-      enum: USER_ROLES,
       default: "User",
     },
   },
