@@ -8,6 +8,6 @@ app.use(express.json());
 
 connectDB();
 
-app.use("/api", userRouter);   // ← ligne manquante, essentielle
+app.use("/api", userRouter);
 
 export default app;

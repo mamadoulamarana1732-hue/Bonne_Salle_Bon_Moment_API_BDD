@@ -39,7 +39,6 @@ const userController = {
 
 create: async (req: Request, res: Response) => {
   try {
-    // Validation avec Joi
     const { error, value } = userSchema.validate(req.body);
 
     if (error) {
@@ -50,7 +49,6 @@ create: async (req: Request, res: Response) => {
 
     const { nom, prenom, email, password, role } = value;
 
-    // Vérification email existant
     const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
       return res.status(409).json({
