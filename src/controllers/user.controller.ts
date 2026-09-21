@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import { UserModel } from "../models/user.model.ts";
 import userSchema from "../validators/user.validators.ts";
+import userservice from "../services/user.service.ts";
 
 const userController = {
 
@@ -48,7 +49,7 @@ const userController = {
 
       const { nom, prenom, email, password, role } = value;
 
-      const existingUser = await UserModel.findOne({ email });
+      const existingUser = userservice.userfindByEmail(email);
       if (existingUser) {
         return res.status(409).json({
           message: "Un utilisateur avec cet email existe déjà.",
@@ -101,7 +102,39 @@ const userController = {
         error,
       });
     }
+  },
+
+  update: async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const { error, value } = userSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({
+        message: error.details[0].message,
+      });
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(id, value, {
+      new: true,
+    });
+    if (!updatedUser) {
+      return res.status(404).json({
+        message: "Utilisateur non trouvé.",
+      });
+    }
+
+    res.status(200).json({
+      message: "Utilisateur modifié avec succès",
+      user: updatedUser.toObject(),
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Erreur lors de la modification de l'utilisateur",
+      error,
+    });
   }
+},
 };
 
 export default userController;
