@@ -19,7 +19,7 @@ const userSchema = Joi.object({
     .min(8)
     .required(),
 
-  UserRole: Joi.string()
+  role: Joi.string()
     .valid("User", "Admin", "Moderator")
     .optional(),
 });
