@@ -7,9 +7,11 @@ const userRouter = express.Router();
 
 userRouter.get("/users", userController.getAll);
 userRouter.get("/users/:id", userController.getById);
-userRouter.post("/users/create", validate(userSchema), userController.create);
-// userRouter.delete("/users/supprimer/:id", userController.deleteUser);
-// userRouter.put('/users/modifier/:id', validate((userSchema)), userController.update);
+// userRouter.post("/users/create", validate(userSchema), userController.create);
+userRouter.post("/users/create", userController.create);
+userRouter.delete("/users/supprimer/:id", userController.deleteUser);
+// userRouter.put('/users/modifier/:id', validate((userSchema)), userController.updateUser);
+userRouter.put('/users/modifier/:id', userController.updateUser);
 
 export default userRouter;
 
