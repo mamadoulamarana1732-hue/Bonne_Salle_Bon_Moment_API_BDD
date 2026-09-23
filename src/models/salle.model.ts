@@ -29,9 +29,10 @@ const salleSchema = new Schema<ISalle>(
       trim: true,
     },
     building: {
-      type: String,
+     type: String,
       required: true,
-      minlength: 6,
+      minlength: 2,
+      trim: true,
     },
     floor: {
       type: Number,
