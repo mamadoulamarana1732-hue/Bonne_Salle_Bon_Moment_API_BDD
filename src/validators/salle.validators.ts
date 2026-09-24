@@ -8,7 +8,7 @@ const salleSchema = Joi.object({
 
   capacity: Joi.number()
     .min(1)
-    .max(10)
+    .max(100)
     .required(),
 
   size: Joi.string()
@@ -23,7 +23,7 @@ const salleSchema = Joi.object({
 
   floor: Joi.number()
     .min(1)
-    .max(10)
+    .max(100)
     .required(),
 
 });

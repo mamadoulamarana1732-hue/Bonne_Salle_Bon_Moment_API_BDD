@@ -44,8 +44,8 @@ import type { ISalle } from "../models/salle.model.ts";
           message: error.details[0].message,
         });
       }
-      const { label, capacity, size, building, floor } = value;
-       const user = salleService.create(req.body);
+      // const { label, capacity, size, building, floor } = value;
+      //  const salle = salleService.create(req.body);
     
 
        res.status(201).json({
