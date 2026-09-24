@@ -7,10 +7,12 @@ import userSchema from "../validators/user.validators.ts";
 const userRouter = express.Router();
 
 userRouter.get("/users", userController.getAll);
-userRouter.get("/users/:id", userController.getById);
 userRouter.post("/users/create", validate(userSchema), userController.create);
-userRouter.delete("/users/supprimer/:id", userController.deleteUser);
-userRouter.put('/users/modifier/:id', userController.updateUser);
+
+//Ces routes existent mais pas démandé par le projet
+// userRouter.delete("/users/supprimer/:id", userController.deleteUser);
+// userRouter.get("/users/:id", userController.getById);
+// userRouter.put('/users/modifier/:id', userController.updateUser);
 
 export default userRouter;
 

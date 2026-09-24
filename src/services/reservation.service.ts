@@ -6,13 +6,12 @@ const getAll = async()=>{
     return reservations;
 };
 
-
 const create = async(Reservation:IReservation)=>{
     const reservation = await reservationRepository.create(Reservation);
     return reservation;
 };
 
- const updateReservation = async (id: string, updateData: Partial<IReservation>) => {
+const updateReservation = async (id: string, updateData: Partial<IReservation>) => {
     const reservation = await reservationRepository.updateReservation(id,updateData);
     if (!reservation) {
         throw new Error("room not found");
@@ -27,14 +26,4 @@ const deleteReservation = async (id: string) => {
     }
     return reservation;
 };
-// const getById = async (id: string) => {
-//     const salle = await salleRepository.getById(id);
-//     if (!salle) {
-//         throw new Error("room not found");
-//     }
-//     return salle;
-// };
-
-//
-// , getById, create, deleteSalle, updateSalle
 export default {getAll, create, updateReservation, deleteReservation };
